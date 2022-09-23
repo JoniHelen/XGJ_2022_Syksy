@@ -259,7 +259,7 @@ MonoBehaviour:
   raycastMask:
     serializedVersion: 2
     m_Bits: 1
-  PieceSpeed: 15
+  PieceSpeed: 20
 --- !u!114 &360349295
 MonoBehaviour:
   m_ObjectHideFlags: 0

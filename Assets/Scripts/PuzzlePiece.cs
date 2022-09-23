@@ -17,6 +17,7 @@ public class PuzzlePiece : MonoBehaviour
     private void Start()
     {
         RotationMultiplier = new Vector3(Random.value - 0.5f, Random.value - 0.5f, Random.value - 0.5f).normalized;
+        transform.rotation = Quaternion.Euler(360 * Random.value, 360 * Random.value, 360 * Random.value);
     }
     private void Update()
     {

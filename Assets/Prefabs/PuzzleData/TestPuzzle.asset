@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524a7984ad9b7f64fb4f393a70a23317, type: 3}
   m_Name: TestPuzzle
   m_EditorClassIdentifier: 
-  Puzzle: {fileID: 0}
+  Puzzle: {fileID: 3703046599717935830, guid: 047c2765013c27d4b95bb8da2d437418, type: 3}

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameMaster : MonoBehaviour
@@ -16,12 +17,6 @@ public class GameMaster : MonoBehaviour
         CurrentPuzzle = Instantiate(Puzzles[0].Puzzle);
         AssignPieces();
         ScatterPuzzlePieces();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void AssignPieces()

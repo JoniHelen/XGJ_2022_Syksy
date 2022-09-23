@@ -142,7 +142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &16409684
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -236,75 +236,7 @@ MonoBehaviour:
   CorrectDistance: 0.5
   CorrectPosition: {x: 0.5, y: -0.5, z: 0.05}
   IsInPlace: 0
---- !u!1001 &190959861
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 3dd660d948cfa184396739813308dc5b,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3dd660d948cfa184396739813308dc5b,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3dd660d948cfa184396739813308dc5b,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3dd660d948cfa184396739813308dc5b,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3dd660d948cfa184396739813308dc5b,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3dd660d948cfa184396739813308dc5b,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3dd660d948cfa184396739813308dc5b,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3dd660d948cfa184396739813308dc5b,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3dd660d948cfa184396739813308dc5b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3dd660d948cfa184396739813308dc5b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3dd660d948cfa184396739813308dc5b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 3dd660d948cfa184396739813308dc5b,
-        type: 3}
-      propertyPath: m_Name
-      value: puzzle_cells011
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3dd660d948cfa184396739813308dc5b, type: 3}
+  ReadyToMove: 0
 --- !u!1 &360349289
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +318,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360349289}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -541,13 +473,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06521e4d8666d2245af168d163398f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Puzzles: []
+  Puzzles:
+  - {fileID: 11400000, guid: 86bf84e31efd18244a91c74b9b5fe859, type: 2}
   LeftBounds:
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
+  - {x: -4, y: -2}
+  - {x: -2, y: 2}
   RightBounds:
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
+  - {x: 2, y: -2}
+  - {x: 4, y: 2}
 --- !u!1 &502139467
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,7 +500,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &502139468
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -661,6 +594,7 @@ MonoBehaviour:
   CorrectDistance: 0.5
   CorrectPosition: {x: -0.5, y: -0.5, z: 0.05}
   IsInPlace: 0
+  ReadyToMove: 0
 --- !u!1 &865215405
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,7 +729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1463915240
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -889,6 +823,7 @@ MonoBehaviour:
   CorrectDistance: 0.5
   CorrectPosition: {x: -0.5, y: 0.5, z: 0.05}
   IsInPlace: 0
+  ReadyToMove: 0
 --- !u!1 &1777421399
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,7 +843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1777421400
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -985,7 +920,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1777421404
 MonoBehaviour:
@@ -1002,6 +937,7 @@ MonoBehaviour:
   CorrectDistance: 0.5
   CorrectPosition: {x: 0.5, y: 0.5, z: 0.05}
   IsInPlace: 0
+  ReadyToMove: 0
 --- !u!1 &1874039367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,5 +981,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

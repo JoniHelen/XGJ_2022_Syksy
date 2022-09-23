@@ -58,13 +58,14 @@ public class PuzzlePiece : MonoBehaviour
 
         while(elapsedTime < moveTime)
         {
-            transform.rotation = Quaternion.Lerp(startRotation, CorrectRotaion, elapsedTime / moveTime);
-            transform.position = Vector3.Lerp(startPos, CorrectPosition, elapsedTime / moveTime);
+            transform.SetPositionAndRotation(
+                Vector3.Lerp(startPos, CorrectPosition, elapsedTime / moveTime),
+                Quaternion.Lerp(startRotation, CorrectRotaion, elapsedTime / moveTime)
+            );
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
 
-        transform.rotation = CorrectRotaion;
-        transform.position = CorrectPosition;
+        transform.SetPositionAndRotation(CorrectPosition, CorrectRotaion);
     }
 }

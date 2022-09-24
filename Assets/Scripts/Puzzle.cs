@@ -7,14 +7,12 @@ public class Puzzle : MonoBehaviour
 {
     public List<PuzzlePiece> PuzzlePieces = new();
     private bool Completed = false;
-    private Renderer rend;
 
     public UnityEvent Complete;
 
     private void Awake()
     {
         AssignPieces();
-        rend = GetComponent<Renderer>();
     }
 
     private void Update()
@@ -24,6 +22,11 @@ public class Puzzle : MonoBehaviour
             Completed = true;
             StartCoroutine(CompletePuzzle());
         }
+    }
+
+    public void AutoComplete()
+    {
+        PuzzlePieces.ForEach(piece => { if (!piece.IsInPlace) piece.PlacePiece(); });
     }
 
     private IEnumerator CompletePuzzle()

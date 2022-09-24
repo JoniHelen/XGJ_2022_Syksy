@@ -19,6 +19,7 @@ public class PuzzlePiece : MonoBehaviour
 
     private void Start()
     {
+        SavePosition();
         rend = GetComponent<Renderer>();
         RotationMultiplier = new Vector3(Random.value - 0.5f, Random.value - 0.5f, Random.value - 0.5f).normalized;
         RandomRotation = Quaternion.Euler(360 * Random.value, 360 * Random.value, 360 * Random.value);
@@ -52,14 +53,24 @@ public class PuzzlePiece : MonoBehaviour
         return 1 - Mathf.Pow(1 - t, 3); //1 + c3 * Mathf.Pow(t - 1, 3) + c1 * Mathf.Pow(t - 1, 2);
     }
 
+    public void PlacePiece()
+    {
+        IsInPlace = true;
+        StartCoroutine(MoveToPosition(0.3f));
+    }
+
     public void Scatter(Vector2 boundsMin, Vector2 boundsMax, float proportion)
     {
-        CorrectPosition = transform.localPosition;
-        CorrectRotation = transform.localRotation;
         float rndX = Random.Range(boundsMin.x, boundsMax.x);
         float rangeY = Mathf.Abs(boundsMax.y - boundsMin.y);
 
         StartCoroutine(MoveToPosition(0.3f, new Vector3(rndX, rangeY * proportion - rangeY / 2, 0.05f), false));
+    }
+
+    private void SavePosition()
+    {
+        CorrectPosition = transform.localPosition;
+        CorrectRotation = transform.localRotation;
     }
 
     public IEnumerator FlashComplete()

@@ -11,6 +11,9 @@ public class GameMaster : MonoBehaviour
     private Puzzle CurrentPuzzle;
     private Puzzle LastPuzzle;
 
+    private bool TimerRunning = false;
+    private bool GameActive = false;
+
     [SerializeField] TextMeshProUGUI timeText;
 
     [SerializeField] List<Vector2> LeftBounds;
@@ -19,27 +22,51 @@ public class GameMaster : MonoBehaviour
     [SerializeField] ParticleSystem leftSystem;
     [SerializeField] ParticleSystem rightSystem;
 
-    // Start is called before the first frame update
-    void Start()
+    public UnityEvent TimerEnded;
+
+    private void Start()
     {
+        TimerEnded.AddListener(GameOver);
+    }
+
+    public void StartGame()
+    {
+        if (CurrentPuzzle != null)
+        {
+            CurrentPuzzle.AutoComplete();
+            StartCoroutine(RetryWait());
+        }
+        else
+        {
+            GameActive = true;
+            NewPuzzle();
+        }
+    }
+
+    private IEnumerator RetryWait()
+    {
+        yield return new WaitForSeconds(1);
+        GameActive = true;
         NewPuzzle();
-        StartCoroutine(Timer(60f));
     }
 
     public void NewPuzzle()
     {
-        GetComponent<PlayerControls>().enabled = false;
-        LastPuzzle = CurrentPuzzle;
-        GameObject pObj = Instantiate(Puzzles[Random.Range(0, Puzzles.Count)].gameObject, Vector3.down * 5, Quaternion.identity);
-        CurrentPuzzle = pObj.GetComponent<Puzzle>();
-        CurrentPuzzle.Complete.AddListener(NewPuzzle);
-        CurrentPuzzle.Complete.AddListener(FireParticles);
+        if (GameActive)
+        {
+            GetComponent<PlayerControls>().enabled = false;
+            LastPuzzle = CurrentPuzzle;
+            GameObject pObj = Instantiate(Puzzles[Random.Range(0, Puzzles.Count)].gameObject, Vector3.down * 5, Quaternion.identity);
+            CurrentPuzzle = pObj.GetComponent<Puzzle>();
+            CurrentPuzzle.Complete.AddListener(NewPuzzle);
+            CurrentPuzzle.Complete.AddListener(FireParticles);
 
-        if (LastPuzzle != null)
-            StartCoroutine(MoveUp(LastPuzzle.gameObject, true));
+            if (LastPuzzle != null)
+                StartCoroutine(MoveUp(LastPuzzle.gameObject, true));
 
-        StartCoroutine(MoveUp(CurrentPuzzle.gameObject, false));
-        StartCoroutine(WaitExecution());
+            StartCoroutine(MoveUp(CurrentPuzzle.gameObject, false));
+            StartCoroutine(WaitExecution());
+        }
     }
 
     private void FireParticles()
@@ -56,6 +83,15 @@ public class GameMaster : MonoBehaviour
             timeText.text = time.ToString("Time left: 00.0s");
             yield return new WaitForEndOfFrame();
         }
+        GameActive = false;
+        TimerRunning = false;
+        TimerEnded.Invoke();
+    }
+
+    private void GameOver()
+    {
+        CurrentPuzzle.Complete.RemoveAllListeners();
+        GetComponent<PlayerControls>().enabled = false;
     }
 
     private IEnumerator MoveUp(GameObject obj, bool destroy)
@@ -91,7 +127,20 @@ public class GameMaster : MonoBehaviour
     private IEnumerator WaitExecution()
     {
         yield return new WaitForSeconds(2);
-        CurrentPuzzle.ScatterPuzzlePieces(LeftBounds, RightBounds);
-        GetComponent<PlayerControls>().enabled = true;
+        if (GameActive)
+        {
+            CurrentPuzzle.ScatterPuzzlePieces(LeftBounds, RightBounds);
+            GetComponent<PlayerControls>().enabled = true;
+            if (!TimerRunning)
+            {
+                TimerRunning = true;
+                StartCoroutine(Timer(60f));
+            }
+        }
+        else
+        {
+            GameOver();
+        }
+
     }
 }

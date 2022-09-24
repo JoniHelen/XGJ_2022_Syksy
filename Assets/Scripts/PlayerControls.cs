@@ -9,6 +9,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] float PieceSpeed = 10f;
 
     private bool MouseDown = false;
+    private bool GrabbedPuzzlePiece = false;
 
     private PuzzlePiece puzzlePiece = null;
 
@@ -24,9 +25,10 @@ public class PlayerControls : MonoBehaviour
             foreach (RaycastHit hit in hitInfo) {
                 GameObject hitObject = hit.collider.gameObject;
 
-                if (hitObject.CompareTag("PuzzlePiece") && puzzlePiece == null) {
+                if (hitObject.CompareTag("PuzzlePiece") && puzzlePiece == null && !GrabbedPuzzlePiece) {
                     puzzlePiece = hitObject.GetComponent<PuzzlePiece>();
                     if (puzzlePiece.IsInPlace) puzzlePiece = null;
+                    GrabbedPuzzlePiece = true;
                 }
 
                 if (hitObject.CompareTag("RayCatcher") && puzzlePiece != null)
@@ -35,6 +37,7 @@ public class PlayerControls : MonoBehaviour
         }
         else {
             puzzlePiece = null;
+            GrabbedPuzzlePiece = false;
         }
     }
 

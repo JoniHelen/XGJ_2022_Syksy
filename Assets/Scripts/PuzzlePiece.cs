@@ -6,7 +6,8 @@ public class PuzzlePiece : MonoBehaviour
 {
     public float CorrectDistance = 0.5f;
     public Vector3 CorrectPosition = Vector3.zero;
-    private Quaternion CorrectRotaion = Quaternion.identity;
+    private Quaternion CorrectRotation = Quaternion.identity;
+    private Quaternion RandomRotation = Quaternion.identity;
     public bool IsInPlace = false;
 
     public bool ReadyToMove = false;
@@ -17,7 +18,7 @@ public class PuzzlePiece : MonoBehaviour
     private void Start()
     {
         RotationMultiplier = new Vector3(Random.value - 0.5f, Random.value - 0.5f, Random.value - 0.5f).normalized;
-        transform.rotation = Quaternion.Euler(360 * Random.value, 360 * Random.value, 360 * Random.value);
+        RandomRotation = Quaternion.Euler(360 * Random.value, 360 * Random.value, 360 * Random.value);
     }
     private void Update()
     {
@@ -35,22 +36,30 @@ public class PuzzlePiece : MonoBehaviour
             if (DistanceToPosition <= CorrectDistance && !IsInPlace)
             {
                 IsInPlace = true;
-                StartCoroutine(MoveToCorrectPosition(0.15f));
+                StartCoroutine(MoveToPosition(0.15f));
             }
         }
+    }
+
+    private float Ease(float t)
+    {
+        //float c1 = 1.70158f;
+        //float c3 = c1 + 1f;
+
+        return 1 - Mathf.Pow(1 - t, 3); //1 + c3 * Mathf.Pow(t - 1, 3) + c1 * Mathf.Pow(t - 1, 2);
     }
 
     public void Scatter(Vector2 boundsMin, Vector2 boundsMax, float proportion)
     {
         CorrectPosition = transform.localPosition;
-        CorrectRotaion = transform.localRotation;
+        CorrectRotation = transform.localRotation;
         float rndX = Random.Range(boundsMin.x, boundsMax.x);
         float rangeY = Mathf.Abs(boundsMax.y - boundsMin.y);
 
-        transform.position = new Vector3(rndX, rangeY * proportion - rangeY / 2, 0.05f);
+        StartCoroutine(MoveToPosition(0.2f, new Vector3(rndX, rangeY * proportion - rangeY / 2, 0.05f), false));
     }
 
-    private IEnumerator MoveToCorrectPosition(float moveTime)
+    private IEnumerator MoveToPosition(float moveTime, Vector3 position = default, bool correctPosition = true)
     {
         float elapsedTime = 0;
         Vector3 startPos = transform.position;
@@ -58,14 +67,29 @@ public class PuzzlePiece : MonoBehaviour
 
         while(elapsedTime < moveTime)
         {
-            transform.SetPositionAndRotation(
-                Vector3.Lerp(startPos, CorrectPosition, elapsedTime / moveTime),
-                Quaternion.Lerp(startRotation, CorrectRotaion, elapsedTime / moveTime)
-            );
+            if (correctPosition)
+                transform.SetPositionAndRotation(
+                    Vector3.Lerp(startPos, CorrectPosition, Ease(elapsedTime / moveTime)),
+                    Quaternion.Lerp(startRotation, CorrectRotation, Ease(elapsedTime / moveTime))
+                );
+            else
+                transform.SetPositionAndRotation(
+                    Vector3.Lerp(startPos, position, Ease(elapsedTime / moveTime)),
+                    Quaternion.Lerp(startRotation, RandomRotation, Ease(elapsedTime / moveTime))
+                );
+
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
 
-        transform.SetPositionAndRotation(CorrectPosition, CorrectRotaion);
+        if (correctPosition)
+        {
+            transform.SetPositionAndRotation(CorrectPosition, CorrectRotation);
+        }
+        else
+        {
+            transform.SetPositionAndRotation(position, RandomRotation);
+            ReadyToMove = true;
+        }
     }
 }

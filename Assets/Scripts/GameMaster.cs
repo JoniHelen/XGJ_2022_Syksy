@@ -28,6 +28,7 @@ public class GameMaster : MonoBehaviour
 
     public void NewPuzzle()
     {
+        GetComponent<PlayerControls>().enabled = false;
         LastPuzzle = CurrentPuzzle;
         GameObject pObj = Instantiate(Puzzles[Random.Range(0, Puzzles.Count)].gameObject, Vector3.down * 5, Quaternion.identity);
         CurrentPuzzle = pObj.GetComponent<Puzzle>();
@@ -91,5 +92,6 @@ public class GameMaster : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         CurrentPuzzle.ScatterPuzzlePieces(LeftBounds, RightBounds);
+        GetComponent<PlayerControls>().enabled = true;
     }
 }

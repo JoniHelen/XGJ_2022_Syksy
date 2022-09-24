@@ -10,6 +10,8 @@ public class PuzzlePiece : MonoBehaviour
     private Quaternion RandomRotation = Quaternion.identity;
     public bool IsInPlace = false;
 
+    private Renderer rend;
+
     public bool ReadyToMove = false;
 
     private Vector3 RotationMultiplier = Vector3.zero;
@@ -17,6 +19,7 @@ public class PuzzlePiece : MonoBehaviour
 
     private void Start()
     {
+        rend = GetComponent<Renderer>();
         RotationMultiplier = new Vector3(Random.value - 0.5f, Random.value - 0.5f, Random.value - 0.5f).normalized;
         RandomRotation = Quaternion.Euler(360 * Random.value, 360 * Random.value, 360 * Random.value);
     }
@@ -56,7 +59,30 @@ public class PuzzlePiece : MonoBehaviour
         float rndX = Random.Range(boundsMin.x, boundsMax.x);
         float rangeY = Mathf.Abs(boundsMax.y - boundsMin.y);
 
-        StartCoroutine(MoveToPosition(0.2f, new Vector3(rndX, rangeY * proportion - rangeY / 2, 0.05f), false));
+        StartCoroutine(MoveToPosition(0.3f, new Vector3(rndX, rangeY * proportion - rangeY / 2, 0.05f), false));
+    }
+
+    public IEnumerator FlashComplete()
+    {
+        float flashTime = 0.5f;
+        float elapsedTime = 0;
+
+        float flashAmount;
+        float flashNumber = 0.5f;
+
+        while (elapsedTime < flashTime)
+        {
+            if (elapsedTime < flashTime / 2)
+                flashAmount = elapsedTime / (flashTime / 2);
+            else
+                flashAmount = 1 - (elapsedTime - flashTime / 2) / (flashTime / 2);
+
+            rend.material.SetFloat("_FlashIntensity", flashNumber * flashAmount);
+
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        rend.material.SetFloat("_FlashIntensity", 0);
     }
 
     private IEnumerator MoveToPosition(float moveTime, Vector3 position = default, bool correctPosition = true)

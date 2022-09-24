@@ -7,12 +7,14 @@ public class Puzzle : MonoBehaviour
 {
     public List<PuzzlePiece> PuzzlePieces = new();
     private bool Completed = false;
+    private Renderer rend;
 
     public UnityEvent Complete;
 
     private void Awake()
     {
         AssignPieces();
+        rend = GetComponent<Renderer>();
     }
 
     private void Update()
@@ -26,7 +28,8 @@ public class Puzzle : MonoBehaviour
 
     private IEnumerator CompletePuzzle()
     {
-        yield return new WaitForSeconds(1);
+        PuzzlePieces.ForEach(piece => piece.StartCoroutine(piece.FlashComplete()));
+        yield return new WaitForSeconds(0.75f);
         Complete.Invoke();
     }
 

@@ -360,7 +360,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Puzzles:
-  - {fileID: 6456217074343152763, guid: 047c2765013c27d4b95bb8da2d437418, type: 3}
+  - {fileID: 77616607325160159, guid: 39a9c211bcffa574a8c4830823922bb0, type: 3}
+  - {fileID: -6216858183013967977, guid: ede67712804e60744b1b90debe518b73, type: 3}
+  - {fileID: -6148582192495760459, guid: 831c8957226f3f743bbe0689e354bc54, type: 3}
+  - {fileID: 5784728763302327647, guid: 7074b0cacb9a4614d99cd17fd6dbd538, type: 3}
+  - {fileID: 6654236219584560320, guid: d8ea5b15ad3a36f45a18f28d2e58aaed, type: 3}
+  - {fileID: 98569178422544517, guid: e23e86ef596abc741b4dec77dfce4728, type: 3}
+  - {fileID: -1812904593649736604, guid: 047c2765013c27d4b95bb8da2d437418, type: 3}
+  - {fileID: 3864435679168729385, guid: 44e17386f7a1c89409a18d07ba83f3c7, type: 3}
+  - {fileID: 2052480230888281048, guid: b85a9a7ff485cad46a97a885859daafa, type: 3}
   LeftBounds:
   - {x: -4, y: -2}
   - {x: -2, y: 2}

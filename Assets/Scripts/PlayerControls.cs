@@ -28,7 +28,7 @@ public class PlayerControls : MonoBehaviour
                 if (hitObject.CompareTag("PuzzlePiece") && puzzlePiece == null && !GrabbedPuzzlePiece) {
                     puzzlePiece = hitObject.GetComponent<PuzzlePiece>();
                     if (puzzlePiece.IsInPlace) puzzlePiece = null;
-                    GrabbedPuzzlePiece = true;
+                    else GrabbedPuzzlePiece = true;
                 }
 
                 if (hitObject.CompareTag("RayCatcher") && puzzlePiece != null)

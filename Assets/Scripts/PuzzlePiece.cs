@@ -64,11 +64,11 @@ public class PuzzlePiece : MonoBehaviour
 
     public IEnumerator FlashComplete()
     {
-        float flashTime = 0.5f;
+        float flashTime = 0.3f;
         float elapsedTime = 0;
 
         float flashAmount;
-        float flashNumber = 0.5f;
+        float flashNumber = 1f;
 
         while (elapsedTime < flashTime)
         {

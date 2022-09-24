@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
+using TMPro;
 
 public class GameMaster : MonoBehaviour
 {
     public List<Puzzle> Puzzles = new();
     private Puzzle CurrentPuzzle;
     private Puzzle LastPuzzle;
+
+    [SerializeField] TextMeshProUGUI timeText;
 
     [SerializeField] List<Vector2> LeftBounds;
     [SerializeField] List<Vector2> RightBounds;
@@ -19,6 +23,7 @@ public class GameMaster : MonoBehaviour
     void Start()
     {
         NewPuzzle();
+        StartCoroutine(Timer(60f));
     }
 
     public void NewPuzzle()
@@ -40,6 +45,16 @@ public class GameMaster : MonoBehaviour
     {
         rightSystem.gameObject.SetActive(true);
         leftSystem.gameObject.SetActive(true);
+    }
+
+    private IEnumerator Timer(float time)
+    {
+        while (time > 0)
+        {
+            time -= Time.deltaTime;
+            timeText.text = time.ToString("Time left: 00.0s");
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     private IEnumerator MoveUp(GameObject obj, bool destroy)

@@ -132,9 +132,11 @@ public class GameMaster : MonoBehaviour
 
     private void FireParticles()
     {
+        if (rightSystem.isPlaying) rightSystem.Stop();
+        if (leftSystem.isPlaying) leftSystem.Stop();
         AudioMaster.instance.PlaySound("PuzzleFinished");
-        rightSystem.gameObject.SetActive(true);
-        leftSystem.gameObject.SetActive(true);
+        rightSystem.Play();
+        leftSystem.Play();
     }
 
     private IEnumerator Timer(float time)

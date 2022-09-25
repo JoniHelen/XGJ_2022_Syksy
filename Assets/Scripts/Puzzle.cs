@@ -48,6 +48,7 @@ public class Puzzle : MonoBehaviour
 
     public void ScatterPuzzlePieces(List<Vector2> LeftBounds, List<Vector2> RightBounds)
     {
+        AudioMaster.instance.PlaySound("PuzzleBreak", true);
         int half = PuzzlePieces.Count / 2;
         for (int i = 0; i < PuzzlePieces.Count; i++)
         {

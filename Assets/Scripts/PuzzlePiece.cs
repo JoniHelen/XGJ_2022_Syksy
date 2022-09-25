@@ -56,7 +56,7 @@ public class PuzzlePiece : MonoBehaviour
     public void PlacePiece()
     {
         IsInPlace = true;
-        StartCoroutine(MoveToPosition(0.3f));
+        StartCoroutine(MoveToPosition(0.3f, false));
     }
 
     public void Scatter(Vector2 boundsMin, Vector2 boundsMax, float proportion)
@@ -64,7 +64,7 @@ public class PuzzlePiece : MonoBehaviour
         float rndX = Random.Range(boundsMin.x, boundsMax.x);
         float rangeY = Mathf.Abs(boundsMax.y - boundsMin.y);
 
-        StartCoroutine(MoveToPosition(0.3f, new Vector3(rndX, rangeY * proportion - rangeY / 2, 0.05f), false));
+        StartCoroutine(MoveToPosition(0.3f, true, new Vector3(rndX, rangeY * proportion - rangeY / 2, 0.05f), false));
     }
 
     private void SavePosition()
@@ -96,7 +96,7 @@ public class PuzzlePiece : MonoBehaviour
         rend.material.SetFloat("_FlashIntensity", 0);
     }
 
-    private IEnumerator MoveToPosition(float moveTime, Vector3 position = default, bool correctPosition = true)
+    private IEnumerator MoveToPosition(float moveTime, bool playSound = true, Vector3 position = default, bool correctPosition = true)
     {
         float elapsedTime = 0;
         Vector3 startPos = transform.position;
@@ -122,6 +122,8 @@ public class PuzzlePiece : MonoBehaviour
         if (correctPosition)
         {
             transform.SetPositionAndRotation(CorrectPosition, CorrectRotation);
+            if (playSound)
+                AudioMaster.instance.PlaySound("PlacePiece");
         }
         else
         {
